@@ -28,8 +28,8 @@ public class Main {
     private static void fillTable() throws SQLException {
         connection.setAutoCommit(false);
         int price = 10;
-        for (int i = 0; i < 10000; i++) {
-            stmt.executeUpdate("INSERT INTO shop(prodid, title, cost) VALUES (" + i + ", 'Product " + i + "', '" + (price + 10) + "')");
+        for (int i = 1; i <= 10000; i++) {
+            stmt.executeUpdate("INSERT INTO shop(prodid, title, cost) VALUES (" + i + ", 'Product " + i + "', '" + (price * i) + "')");
         }
         connection.commit();
         connection.setAutoCommit(true);
