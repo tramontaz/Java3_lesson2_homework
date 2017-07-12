@@ -1,6 +1,7 @@
 package ru.geekbrains.java3lesson2HW;
 
 import java.sql.*;
+import java.util.Scanner;
 
 public class Main {
     private static Connection connection;
@@ -11,9 +12,8 @@ public class Main {
         try {
             connect();
             long t = System.currentTimeMillis();
-            dropTable();
-            createTable();
-            fillTable();
+//            taskOne();
+            selectCostOfTheProduct();
             System.out.println(System.currentTimeMillis() - t);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -23,6 +23,28 @@ public class Main {
             disconnect();
         }
 
+
+    }
+
+    private static void selectCostOfTheProduct() throws SQLException {
+        Scanner sc = new Scanner(System.in);
+        String scanString = sc.nextLine();
+        PreparedStatement psCost = connection.prepareStatement("SELECT cost FROM shop WHERE title = ?;");
+        psCost.setString(1, scanString);
+        ResultSet rs = psCost.executeQuery();
+        System.out.println("The cost of the product = " + rs.getString(1));
+        sc.close();
+    }
+
+    private static void badSelect(String sqlQuery) throws SQLException {
+        ResultSet rs = stmt.executeQuery("SELECT cost FROM shop WHERE title = 'Product 9986';");
+        System.out.println("The cost of the product = " + rs.getInt(1));
+    }
+
+    private static void taskOne() throws SQLException {
+        dropTable();
+        createTable();
+        fillTable();
     }
 
     private static void fillTable() throws SQLException {
